@@ -5,6 +5,8 @@ local conf = require("telescope.config").values
 local builtin = require("telescope.builtin")
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
+local previewers = require "telescope.previewers"
+
 
 if not has_telescope then
   error('This plugin requires nvim-telescope/telescope.nvim')
@@ -27,10 +29,11 @@ M.changed_files = function(opts)
 	opts = opts or {}
 
 	pickers.new(opts, {
-		prompt_title = "changed files",
+		prompt_title = "Changed files",
 		finder = finders.new_table {
 			results = files
 		},
+		previewer = previewers.git_file_diff.new(opts),
 		sorter = conf.generic_sorter(opts),
 	}):find()
 end
