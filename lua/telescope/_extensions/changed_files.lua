@@ -15,7 +15,7 @@ end
 M = {}
 
 M.changed_files = function(opts)
-	local base_branch = vim.g.telescope_changed_files_base_branch or "develop"
+	local base_branch = vim.g.TELESCOPE_CHANGED_FILES_BASE_BRANCH or "develop"
 	local command = "git diff --name-only $(git merge-base HEAD " .. base_branch .. " )"
 	local handle = io.popen(command)
 	local result = handle:read("*a")
@@ -45,7 +45,7 @@ M.choose_base_branch = function(opts)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-		vim.g.telescope_changed_files_base_branch = selection.value
+		vim.g.TELESCOPE_CHANGED_FILES_BASE_BRANCH = selection.value
 		M.base_branch = selection.value
       end)
       return true
